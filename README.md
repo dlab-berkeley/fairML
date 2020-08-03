@@ -5,7 +5,7 @@ I have edited the ProPublica's Analysis of the COMPAS dataset to increase code r
 
 1. Bias in the data 
 - Logistic regression analysis 
-  - Risk of Recidivism Data [[Code](https://github.com/jaeyk/compas-analysis/blob/master/code/01_risk_of_recidivism.ipynb)]
+  - Risk of Recidivism Data [[Code](https://github.com/dlab-berkeley/fairMLworkshop/blob/master/code/01_risk_of_recidivism.ipynb)]
   - Risk of Violent Recidivism Data [[Code](https://github.com/jaeyk/compas-analysis/blob/master/code/02_risk_of_violent_recidivism.ipynb)]
 
 2. Bias in the algorithm 
