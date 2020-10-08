@@ -1,7 +1,7 @@
-$)Cdelete_merged_file: true
+delete_merged_file: true
 repo: https://github.com/dlab-berkeley/fairMLworkshop
 output_dir: docs
 new_session: true
 language:
-    ui:
-      chapter_name: "Chapter "
+  ui:
+    chapter_name: "Chapter "

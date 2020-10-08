@@ -1,9 +1,10 @@
-$)C# Risk of recidivism analysis
+# Risk of recidivism analysis
 
 ## Setup 
 
-```{r message=FALSE, warning=FALSE}
-if (!require("pacman")) install.packages("pacman", repos = "http://cran.us.r-project.org")
+```{r}
+if (!require("pacman")) install.packages("pacman")
+
 pacman::p_load(
  tidyverse, # tidyverse packages 
  conflicted, # an alternative conflict resolution strategy 
