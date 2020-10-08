@@ -1,6 +1,8 @@
 
 **Redoing ProPublica Analysis of the COMPAS dataset**
 
+Workshop book version: https://dlab-berkeley.github.io/fairMLworkshop/
+
 I have edited the ProPublica's Analysis of the COMPAS dataset to increase code readability and make changing data analysis and visualization easier.
 
 1. Bias in the data 
