@@ -49,9 +49,6 @@ theme_set(ggthemes::theme_fivethirtyeight())
 
 We select fields for severity of charge, number of priors, demographics, age, sex, COMPAS scores, and whether each person was accused of a crime within two years.
 
-- N of observations (rows): 7,214
-- N of variables (columns): 53
-
 
 ```r
 two_years <- read_csv(here("data", "compas-scores-two-years.csv"))
@@ -63,11 +60,13 @@ two_years <- read_csv(here("data", "compas-scores-two-years.csv"))
 ```
 
 ```r
-dim(two_years)
+glue("N of observations (rows): {nrow(two_years)}
+      N of variables (columns): {ncol(two_years)}")
 ```
 
 ```
-## [1] 7214   53
+## N of observations (rows): 7214
+## N of variables (columns): 53
 ```
 
 ## Wrangling 
