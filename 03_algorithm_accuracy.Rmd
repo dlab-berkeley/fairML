@@ -156,11 +156,16 @@ As these plots show, the COMPAS score treats a High risk women the same as a Med
 
 The above analysis shows that the Compas algorithm does overpredict African-American defendant's future recidivism, but we haven't yet explored the direction of the bias. We can discover fine differences in overprediction and underprediction by comparing Compas scores across racial lines.
 
-```{r}
+```{r cache=TRUE}
 
-# This directory location may be different depending on where you installed python
-# Type which python in the command line 
-use_python("/home/jae/anaconda3/bin/python")
+# create a new environment 
+conda_create("r-reticulate")
+
+# install libs 
+conda_install("r-reticulate", c("pandas"))
+
+# indicate that we want to use a specific condaenv
+use_condaenv("r-reticulate")
 
 ```
 
@@ -172,6 +177,10 @@ from csv import DictReader
 
 people = []
 
+```
+
+```{python}
+
 with open("./data/cox-parsed.csv") as f:
     reader = PeekyReader(DictReader(f))
     try:
@@ -182,59 +191,69 @@ with open("./data/cox-parsed.csv") as f:
     except StopIteration:
         pass
 
+```
+
+```{python}
+
 pop = list(filter(lambda i: ((i.recidivist == True and i.lifetime <= 730) or
                               i.lifetime > 730), list(filter(lambda x: x.score_valid, people))))
 
 recid = list(filter(lambda i: i.recidivist == True and i.lifetime <= 730, pop))
 
-recid
-
 rset = set(recid)
 
 surv = [i for i in pop if i not in rset]
+
 ```
 
-Define a function for a bar plot.
+Define a function for a table.
 
 ```{python}
 
-import matplotlib.pyplot as plt
+import pandas as pd 
 
-def bar_plot(x, y):
-    t = table(list(x), list(y))
+def create_table(x, y):
 
-    plt.bar(range(len(t)), list(t.values()), align='center') # Create a bar graph
-
-    plt.xticks(range(len(t)), list(t.keys())) # Create xlabel names
+  t = table(list(x), list(y))
+  
+  df = pd.DataFrame(t.items(), 
+             columns = ['Metrics', 'Scores'])
+             
+  return(df)
+             
 ```
 
-<!-- ```{python} -->
-<!-- bar_plot(recid, surv) -->
-<!-- plt.title("All defendants") -->
-<!-- plt.show() -->
+- All defenders 
 
-<!-- ``` -->
+```{python}
+create_table(list(recid), list(surv))
+``` 
 
 That number is higher for African Americans at 44.85% and lower for whites at 23.45%.
 
-<!-- ```{python} -->
+```{python}
 
-<!-- is_afam = is_race("African-American") -->
+def create_comp_tables(recid_data, surv_data):
+  
+    # filtering variables 
+    is_afam = is_race("African-American")
+    is_white = is_race("Caucasian")
+  
+    # dfs 
+    df1 = create_table(filter(is_afam, recid_data), filter(is_afam, surv_data))
+    df2 = create_table(filter(is_white, recid_data), filter(is_white, surv_data))
+  
+    # concat 
+    dfs = pd.concat([df1, df2])
+  
+    # Add group column 
+    dfs['Groups'] = ['African Americans','African Americans','Whites','Whites']
+  
+    return(dfs)   
 
-<!-- bar_plot(filter(is_afam, recid), filter(is_afam, surv)) -->
-<!-- plt.title("Black defendants") -->
-<!-- plt.show() -->
+create_comp_tables(recid, surv)
 
-<!-- ``` -->
-
-<!-- ```{python} -->
-<!-- is_white = is_race("Caucasian") -->
-
-<!-- bar_plot(filter(is_white, recid), filter(is_white, surv)) -->
-<!-- plt.title("White defendants") -->
-<!-- plt.show() -->
-
-<!-- ``` -->
+```
 
 ### Risk of violent recidivism
 
@@ -264,30 +283,17 @@ vrset = set(vrecid)
 vsurv = [i for i in vpop if i not in vrset]
 ```
 
-<!-- ```{python} -->
-<!-- bar_plot(vrecid, vsurv) -->
-<!-- plt.title("All defendants") -->
-<!-- plt.show() -->
-<!-- ``` -->
+```{python}
+
+create_table(vrecid, vsurv)
+
+```
 
 Even more so for Black defendants.
 
-<!-- ````{python} -->
-<!-- is_afam = is_race("African-American") -->
-
-<!-- bar_plot(filter(is_afam, vrecid), filter(is_afam, vsurv)) -->
-<!-- plt.title("Black defendants") -->
-<!-- plt.show() -->
-
-<!-- ``` -->
-
-<!-- ```{python} -->
-<!-- is_white = is_race("Caucasian") -->
-
-<!-- bar_plot(filter(is_white, vrecid), filter(is_white, vsurv)) -->
-<!-- plt.title("White defendants") -->
-<!-- plt.show() -->
-<!-- ``` -->
+````{python}
+create_comp_tables(vrecid, vsurv)
+```
 
 
 
