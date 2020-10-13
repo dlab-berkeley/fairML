@@ -1,15 +1,17 @@
 
 **Redoing ProPublica Analysis of the COMPAS dataset**
 
+Workshop book version: https://dlab-berkeley.github.io/fairMLworkshop/
+
 I have edited the ProPublica's Analysis of the COMPAS dataset to increase code readability and make changing data analysis and visualization easier.
 
 1. Bias in the data 
 - Logistic regression analysis 
-  - Risk of Recidivism Data [[Code](https://github.com/jaeyk/compas-analysis/blob/master/code/01_risk_of_recidivism.ipynb)]
-  - Risk of Violent Recidivism Data [[Code](https://github.com/jaeyk/compas-analysis/blob/master/code/02_risk_of_violent_recidivism.ipynb)]
+  - Risk of Recidivism Data [[Code](https://github.com/dlab-berkeley/fairMLworkshop/blob/master/code/01_risk_of_recidivism.ipynb)]
+  - Risk of Violent Recidivism Data [[Code](https://github.com/dlab-berkeley/fairMLworkshop/blob/master/code/02_risk_of_violent_recidivism.ipynb)]
 
 2. Bias in the algorithm 
-- Survival analysis [[Code](https://github.com/jaeyk/compas-analysis/blob/master/code/03_algorithm_accuracy.ipynb)]
+- Survival analysis [[Code](https://github.com/dlab-berkeley/fairMLworkshop/blob/master/code/03_algorithm_accuracy.ipynb)]
 
 For more detailed information on the Machine Bias project, I encourage to check out [this article](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing).
 

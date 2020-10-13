@@ -2,7 +2,7 @@
 knitr: "bookdown::render_book"
 title: "Fairness and Bias in Machine Learning Workshop"
 author: ["Jae Yeon Kim", "Aniket Kesari", "Renata Barreto", "Avery Richard"]
-date: "`r Sys.Date()`"
+date: "2020-10-13"
 site: bookdown::bookdown_site
 github-repo: dlab-berkeley/fairMLworkshop
 output: bookdown::gitbook
@@ -16,10 +16,7 @@ colorlinks: yes
 description: "Fairness and Bias in Machine Learning Workshop"
 ---
 
-```{r include=FALSE}
-# To speed up building process 
-knitr::opts_chunk$set(cache = TRUE)
-```
+
 
 # Redoing ProPublica Analysis of the COMPAS dataset
 

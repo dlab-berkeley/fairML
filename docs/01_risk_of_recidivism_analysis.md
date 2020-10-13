@@ -2,9 +2,16 @@
 
 ## Setup 
 
-```{r}
-if (!require("pacman")) install.packages("pacman")
 
+```r
+if (!require("pacman")) install.packages("pacman")
+```
+
+```
+## Loading required package: pacman
+```
+
+```r
 pacman::p_load(
  tidyverse, # tidyverse packages 
  conflicted, # an alternative conflict resolution strategy 
@@ -19,8 +26,21 @@ pacman::p_load(
 
 # To avoid conflicts 
 conflict_prefer("filter", "dplyr") 
-conflict_prefer("select", "dplyr") 
+```
 
+```
+## [conflicted] Will prefer dplyr::filter over any other package
+```
+
+```r
+conflict_prefer("select", "dplyr") 
+```
+
+```
+## [conflicted] Will prefer dplyr::select over any other package
+```
+
+```r
 # Set themes 
 theme_set(ggthemes::theme_fivethirtyeight())
 ```
@@ -29,12 +49,24 @@ theme_set(ggthemes::theme_fivethirtyeight())
 
 We select fields for severity of charge, number of priors, demographics, age, sex, COMPAS scores, and whether each person was accused of a crime within two years.
 
-```{r message=FALSE}
-two_years <- read_csv(here("data", "compas-scores-two-years.csv"))
 
+```r
+two_years <- read_csv(here("data", "compas-scores-two-years.csv"))
+```
+
+```
+## Warning: Duplicated column names deduplicated: 'decile_score' =>
+## 'decile_score_1' [40], 'priors_count' => 'priors_count_1' [49]
+```
+
+```r
 glue("N of observations (rows): {nrow(two_years)}
       N of variables (columns): {ncol(two_years)}")
+```
 
+```
+## N of observations (rows): 7214
+## N of variables (columns): 53
 ```
 
 ## Wrangling 
@@ -48,8 +80,8 @@ glue("N of observations (rows): {nrow(two_years)}
 
 ### Create a function 
 
-```{r}
 
+```r
 wrangle_data <- function(data){
 
 df <- data %>% 
@@ -82,22 +114,57 @@ return(df)}
 
 ### Apply the function to the data 
 
-```{r}
+
+```r
 df <- wrangle_data(two_years)
 
 names(df)
+```
 
+```
+##  [1] "age"                     "crime"                  
+##  [3] "race"                    "age_cat"                
+##  [5] "score_text"              "gender"                 
+##  [7] "priors_count"            "days_b_screening_arrest"
+##  [9] "decile_score"            "is_recid"               
+## [11] "two_year_recid"          "c_jail_in"              
+## [13] "c_jail_out"              "length_of_stay"         
+## [15] "score"                   "score_num"
+```
+
+```r
 # Check whether the function works as expected
 head(df, 5)
+```
+
+```
+## # A tibble: 5 x 16
+##     age crime race  age_cat score_text gender priors_count days_b_screenin…
+##   <dbl> <fct> <fct> <fct>   <fct>      <fct>         <dbl>            <dbl>
+## 1    69 F     Other Greate… Low        Male              0               -1
+## 2    34 F     Afri… 25 - 45 Low        Male              0               -1
+## 3    24 F     Afri… Less t… Low        Male              4               -1
+## 4    44 M     Other 25 - 45 Low        Male              0                0
+## 5    41 F     Cauc… 25 - 45 Medium     Male             14               -1
+## # … with 8 more variables: decile_score <dbl>, is_recid <dbl>,
+## #   two_year_recid <dbl>, c_jail_in <dttm>, c_jail_out <dttm>,
+## #   length_of_stay <dbl>, score <fct>, score_num <dbl>
 ```
 
 ## Descriptive analysis 
 
 - Higher COMPAS scores are slightly correlated with a longer length of stay.
 
-```{r}
-cor(df$length_of_stay, df$decile_score)
 
+```r
+cor(df$length_of_stay, df$decile_score)
+```
+
+```
+## [1] 0.2073297
+```
+
+```r
 df %>%
   group_by(score) %>%
   count() %>%
@@ -107,9 +174,12 @@ df %>%
          y = "Count",
          title = "Score distribution")
 ```
+
+<img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 Judges are often presented with two sets of scores from the COMPAS system -- one that classifies people into High, Medium and Low risk, and a corresponding decile score. There is a clear downward trend in the decile scores as those scores increase for white defendants.
 
-```{r}
+
+```r
 df %>%
   ggplot(aes(ordered(decile_score))) + 
           geom_bar() +
@@ -119,14 +189,16 @@ df %>%
                Title = "Defendant's Decile Score")
 ```
 
+<img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+
 ## Modeling 
 
 After filtering out bad rows, our first question is whether there is a significant difference in COMPAS scores between races. To do so we need to change some variables into factors, and run a logistic regression, comparing low scores to high scores.
 
 ### Model building 
 
-```{r}
 
+```r
 model_data <- function(data){
 
 # Logistic regression model
@@ -158,22 +230,27 @@ list(lr_est, ols_est1, ols_est2,
      lr_AIC, ols_AIC1, ols_AIC2)
 
 }
-
 ```
 
 ### Model comparisons 
 
-```{r}
 
+```r
 glue("AIC score of logistic regression: {model_data(df)[4]} 
       AIC score of OLS regression (with categorical DV):  {model_data(df)[5]}
       AIC score of OLS regression (with continuous DV): {model_data(df)[6]}")
+```
 
+```
+## AIC score of logistic regression: 6192.40169473357 
+## AIC score of OLS regression (with categorical DV):  11772.1148541111
+## AIC score of OLS regression (with continuous DV): 26779.9512226999
 ```
 
 ### Logistic regression model 
 
-```{r}
+
+```r
 lr_model <- model_data(df)[1] %>% data.frame()
 
 lr_model %>%
@@ -185,10 +262,12 @@ lr_model %>%
   labs(y = "Estimate", x = "",
       title = "Logistic regression") +
   geom_hline(yintercept = 0, linetype = "dashed")
-
 ```
 
-```{r}
+<img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+
+
+```r
 interpret_estimate <- function(model){
     
     # Control 
@@ -204,7 +283,8 @@ interpret_estimate <- function(model){
 }
 ```
 
-```{r}
+
+```r
 interpret_estimate(lr_model) %>%
     mutate(term = gsub("race|age_cat|gender","", term)) %>% 
     ggplot(aes(x = fct_reorder(term, likelihood), y = likelihood)) +
@@ -215,6 +295,8 @@ interpret_estimate(lr_model) %>%
         scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
         geom_hline(yintercept = 1, linetype = "dashed")
 ```
+
+<img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 
 
