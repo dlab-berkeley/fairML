@@ -60,7 +60,7 @@ two_years_violent <- read_csv(here("data" ,"compas-scores-two-years-violent.csv"
 
 ```
 ## 
-## ── Column specification ──────────────────────────────
+## ── Column specification ─────────────────────────
 ## cols(
 ##   .default = col_double(),
 ##   name = col_character(),
