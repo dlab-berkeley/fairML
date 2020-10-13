@@ -1,4 +1,4 @@
-# Risk of recidivism analysis
+# Risk of Recidivism Analysis
 
 ## Setup 
 
@@ -15,6 +15,7 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(
  tidyverse, # tidyverse packages 
  conflicted, # an alternative conflict resolution strategy 
+ ggthemes, # other themes for ggplot2 
  patchwork, # arranging ggplots
  scales, # rescaling 
  survival, # survival analysis
@@ -37,6 +38,11 @@ conflict_prefer("select", "dplyr")
 
 ```
 ## [conflicted] Will prefer dplyr::select over any other package
+```
+
+```r
+# Set themes 
+theme_set(ggthemes::theme_fivethirtyeight())
 ```
 
 ## Load data 
@@ -160,9 +166,6 @@ cor(df$length_of_stay, df$decile_score)
 ```
 
 ```r
-# Set theme
-ggplot2::theme_set(theme_minimal())
-
 df %>%
   group_by(score) %>%
   count() %>%

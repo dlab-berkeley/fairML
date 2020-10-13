@@ -1,0 +1,299 @@
+# "Risk of Violent Recidivism "
+
+- In order to test whether Compas scores do an accurate job of deciding whether an offender is Low, Medium or High risk, we ran a Cox Proportional Hazards model. Northpointe, the company that created COMPAS and markets it to Law Enforcement, also ran a Cox model in [their validation study](https://journals.sagepub.com/doi/abs/10.1177/0093854808326545).
+
+- We used the counting model and removed people when they were incarcerated. Due to errors in the underlying jail data, we need to filter out 32 rows that have an end date more than the start date. Considering that there are 13,334 total rows in the data, such a small amount of errors will not affect the results.
+
+## Setup 
+
+```{r}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(
+ tidyverse, # tidyverse packages 
+ conflicted, # an alternative conflict resolution strategy 
+ ggthemes, # other themes for ggplot2 
+ patchwork, # arranging ggplots
+ scales, # rescaling 
+ survival, # survival analysis
+ broom, # for modeling
+ here, # reproducibility 
+ glue, # pasting strings and objects 
+ reticulate # source python codes
+)
+
+# To avoid conflicts 
+conflict_prefer("filter", "dplyr") 
+conflict_prefer("select", "dplyr") 
+
+# Set themes 
+theme_set(ggthemes::theme_fivethirtyeight())
+
+```
+
+
+## Load data 
+
+```{r}
+cox_data <- read_csv(here("data" ,"cox-parsed.csv"))
+
+glue("N of observations (rows): {nrow(cox_data)}
+      N of variables (columns): {ncol(cox_data)}")
+
+```
+
+## Wrangling
+
+```{r}
+
+df <- cox_data %>% 
+    filter(score_text != "N/A") %>%
+    filter(end > start) %>%
+    mutate(c_charge_degree = factor(c_charge_degree),
+           age_cat = factor(age_cat),
+           race = factor(race, levels = c("Caucasian","African-American","Hispanic","Other","Asian","Native American")),
+           sex = factor(sex, levels = c("Male","Female")),
+           score_factor = factor(score_text, levels = c("Low", "Medium", "High")))
+
+grp <- df[!duplicated(df$id),]
+
+```
+
+### Descriptive analysis 
+
+Score distribution 
+
+```{r}
+grp %>% 
+    group_by(score_factor) %>%
+      count() %>%
+      ggplot(aes(x = score_factor, y = n)) +
+        geom_col() +
+        labs(x = "Score",
+             y = "Count",
+             title = "Score distribution")
+```
+
+Score distribution by race
+
+```{r}
+
+df %>%
+  ggplot(aes(ordered(score_factor))) + 
+          geom_bar() +
+          facet_wrap(~race, nrow = 2) +
+          labs(x = "Decile Score",
+               y = "Count",
+               Title = "Defendant's Decile Score")
+
+```
+
+### Modeling 
+
+```{r}
+
+f2 <- Surv(start, end, event, type="counting") ~ race + score_factor + race * score_factor
+
+model <- coxph(f2, data = df)
+
+model %>%
+  broom::tidy(conf.int = TRUE) %>%
+  mutate(term = gsub("race|score_factor","", term)) %>% 
+  filter(term != "<chr>") %>%
+  ggplot(aes(x = fct_reorder(term, estimate), y = estimate, ymax = conf.high, ymin = conf.low)) +
+  geom_pointrange() +
+  coord_flip() +
+  labs(y = "Estimate", x = "")
+    
+```
+
+The interaction term shows a similar disparity as the logistic regression above.
+
+High risk white defendants are 3.61 more likely than low risk white defendants, while High risk black defendants are 2.99 more likely than low.
+
+```{r}
+visualize_surv <- function(input){
+  
+f <- Surv(start, end, event, type="counting") ~ score_factor
+
+fit <- survfit(f, data = input)
+
+fit %>%
+    tidy(conf.int = TRUE) %>%
+    mutate(strata = gsub("score_factor=","", strata)) %>%
+    mutate(strata = factor(strata, levels = c("High","Medium","Low"))) %>%
+    ggplot(aes(x = time, y = estimate, ymax = conf.high, ymin = conf.low, group = strata, col = strata)) +
+    geom_pointrange(alpha = 0.1) +
+    guides(colour = guide_legend(override.aes = list(alpha = 1))) +
+    ylim(c(0, 1)) +
+    labs(x = "Time", y = "Estimated survival rate", col = "Strata")}
+```
+
+```{r}
+visualize_surv(df) + ggtitle("Overall")
+```
+
+Black defendants do recidivate at higher rates according to race specific Kaplan Meier plots.
+
+```{r}
+
+(df %>% filter(race == "Caucasian") %>% visualize_surv() + ggtitle("Caucasian")) /
+(df %>% filter(race == "African-American") %>% visualize_surv() + ggtitle("African-American")) 
+```
+
+In terms of underlying recidivism rates, we can look at gender specific Kaplan Meier estimates. There is a striking difference between women and men.
+
+```{r}
+
+(df %>% filter(sex == "Female") %>% visualize_surv() + ggtitle("Female")) /
+
+(df %>% filter(sex == "Male") %>% visualize_surv() + ggtitle("Male"))
+
+```
+
+As these plots show, the COMPAS score treats a High risk women the same as a Medium risk man.
+
+### Risk of Recidivism Accuracy 
+
+The above analysis shows that the Compas algorithm does overpredict African-American defendant's future recidivism, but we haven't yet explored the direction of the bias. We can discover fine differences in overprediction and underprediction by comparing Compas scores across racial lines.
+
+```{r}
+
+# This directory location may be different depending on where you installed python
+# Type which python in the command line 
+use_python("/home/jae/anaconda3/bin/python")
+
+```
+
+
+```{python}
+
+from truth_tables import PeekyReader, Person, table, is_race, count, vtable, hightable, vhightable
+from csv import DictReader
+
+people = []
+
+with open("./data/cox-parsed.csv") as f:
+    reader = PeekyReader(DictReader(f))
+    try:
+        while True:
+            p = Person(reader)
+            if p.valid:
+                people.append(p)
+    except StopIteration:
+        pass
+
+pop = list(filter(lambda i: ((i.recidivist == True and i.lifetime <= 730) or
+                              i.lifetime > 730), list(filter(lambda x: x.score_valid, people))))
+
+recid = list(filter(lambda i: i.recidivist == True and i.lifetime <= 730, pop))
+
+recid
+
+rset = set(recid)
+
+surv = [i for i in pop if i not in rset]
+```
+
+Define a function for a bar plot.
+
+```{python}
+
+import matplotlib.pyplot as plt
+
+def bar_plot(x, y):
+    t = table(list(x), list(y))
+
+    plt.bar(range(len(t)), list(t.values()), align='center') # Create a bar graph
+
+    plt.xticks(range(len(t)), list(t.keys())) # Create xlabel names
+
+bar_plot(recid, surv)
+plt.title("All defendants")
+plt.show()
+
+```
+
+That number is higher for African Americans at 44.85% and lower for whites at 23.45%.
+
+```{python}
+
+is_afam = is_race("African-American")
+
+bar_plot(filter(is_afam, recid), filter(is_afam, surv))
+plt.title("Black defendants")
+plt.show()
+
+```
+
+```{python}
+is_white = is_race("Caucasian")
+
+bar_plot(filter(is_white, recid), filter(is_white, surv))
+plt.title("White defendants")
+plt.show()
+
+```
+
+### Risk of violent recidivism
+
+Compas also offers a score that aims to measure a persons risk of violent recidivism, which has a similar overall accuracy to the Recidivism score.
+
+```{python}
+
+vpeople = []
+
+with open("./data/cox-violent-parsed.csv") as f:
+    reader = PeekyReader(DictReader(f))
+    try:
+        while True:
+            p = Person(reader)
+            if p.valid:
+                vpeople.append(p)
+    except StopIteration:
+        pass
+
+vpop = list(filter(lambda i: ((i.violent_recidivist == True and i.lifetime <= 730) or
+                              i.lifetime > 730), list(filter(lambda x: x.vscore_valid, vpeople))))
+
+vrecid = list(filter(lambda i: i.violent_recidivist == True and i.lifetime <= 730, vpeople))
+
+vrset = set(vrecid)
+
+vsurv = [i for i in vpop if i not in vrset]
+```
+
+```{python}
+bar_plot(vrecid, vsurv)
+plt.title("All defendants")
+plt.show()
+```
+
+Even more so for Black defendants.
+
+````{python}
+is_afam = is_race("African-American")
+
+bar_plot(filter(is_afam, vrecid), filter(is_afam, vsurv))
+plt.title("Black defendants")
+plt.show()
+
+```
+
+```{python}
+is_white = is_race("Caucasian")
+
+bar_plot(filter(is_white, vrecid), filter(is_white, vsurv))
+plt.title("White defendants")
+plt.show()
+```
+
+
+
+
+
+
+
+
+
+
+
