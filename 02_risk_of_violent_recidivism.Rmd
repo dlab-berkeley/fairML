@@ -1,4 +1,4 @@
-# "Risk of Violent Recidivism "
+# Risk of Violent Recidivism
 
 ## Setup 
 
