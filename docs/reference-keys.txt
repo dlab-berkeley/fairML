@@ -28,3 +28,5 @@ descriptive-analysis-2
 modeling-2
 risk-of-recidivism-accuracy
 risk-of-violent-recidivism
+risk-of-violent-recidivism-accuracy
+fairness-and-bias-in-machine-learning-workshop

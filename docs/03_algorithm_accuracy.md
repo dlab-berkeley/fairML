@@ -65,7 +65,7 @@ cox_data <- read_csv(here("data" ,"cox-parsed.csv"))
 
 ```
 ## 
-## ── Column specification ───────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## cols(
 ##   .default = col_character(),
 ##   id = col_double(),
@@ -364,7 +364,7 @@ read.csv(here("data", "comp_tables_recid.csv"))[,-1] %>%
 
 <img src="03_algorithm_accuracy_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
-### Risk of violent recidivism
+### Risk of Violent Recidivism accuracy
 
 COMPAS also offers a score that aims to measure a persons risk of violent recidivism, which has a similar overall accuracy to the Recidivism score.
 
