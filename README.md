@@ -1,24 +1,26 @@
 
-**Redoing ProPublica Analysis of the COMPAS dataset**
+# Fairness and Bias in Machine Learning Workshop
 
-Workshop book version: https://dlab-berkeley.github.io/fairMLworkshop/
+**Overview**
 
-I have edited the ProPublica's Analysis of the COMPAS dataset to increase code readability and make changing data analysis and visualization easier.
+This workshops provides a gentle introduction to the fairness and Bias in machine Learning applications with a focus on the ProPublica's Analysis of the COMPAS algorithm. We revised [the ProPublica's original R and Python code](https://github.com/propublica/compas-analysis/blob/master/Compas%20Analysis.ipynb) to increase its code readability, remix it with other references, and published and deployed the revised notebook using bookdown and GitHub page.
+
+![A gif of defendants being put into an algorithm by SELMAN DESIGN](https://wp.technologyreview.com/wp-content/uploads/2019/10/mit-alg-yb-02-7.gif?fit=1444,962)
+
+**Outline** 
 
 1. Bias in the data 
-- Logistic regression analysis 
-  - Risk of Recidivism Data [[Code](https://github.com/dlab-berkeley/fairMLworkshop/blob/master/code/01_risk_of_recidivism.ipynb)]
-  - Risk of Violent Recidivism Data [[Code](https://github.com/dlab-berkeley/fairMLworkshop/blob/master/code/02_risk_of_violent_recidivism.ipynb)]
+  - Risk of Recidivism Data
+  - Risk of Violent Recidivism Data
 
 2. Bias in the algorithm 
-- Survival analysis [[Code](https://github.com/dlab-berkeley/fairMLworkshop/blob/master/code/03_algorithm_accuracy.ipynb)]
 
-For more detailed information on the Machine Bias project, I encourage to check out [this article](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing).
+**References**
 
-[Argument](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing/) by Julia Angwin, Jeff Larson, Surya Mattu and Lauren Kirchner
+For more information on the ProPublica's Machine Bias project, we encourage to check out the following references.
 
-[Counterargument](https://www.washingtonpost.com/news/monkey-cage/wp/2016/10/17/can-an-algorithm-be-racist-our-analysis-is-more-cautious-than-propublicas/) by Sam Corbett-Davies, Emma Pierson, Avi Feller and Sharad Goel
+* [Argument](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing/) by Julia Angwin, Jeff Larson, Surya Mattu and Lauren Kirchner
 
-[Methodology](https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm/)
+* [Counterargument](https://www.washingtonpost.com/news/monkey-cage/wp/2016/10/17/can-an-algorithm-be-racist-our-analysis-is-more-cautious-than-propublicas/) by Sam Corbett-Davies, Emma Pierson, Avi Feller and Sharad Goel
 
-[Original Notebook in R](https://github.com/propublica/compas-analysis/blob/master/Compas%20Analysis.ipynb)
+* [Methodology](https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm/)
