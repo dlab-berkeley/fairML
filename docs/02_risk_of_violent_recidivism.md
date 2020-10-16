@@ -201,7 +201,7 @@ df %>%
 
 <img src="02_risk_of_violent_recidivism_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
-### Modeling 
+## Modeling 
 
 After filtering out bad rows, our first question is whether there is a significant difference in COMPAS scores between races. To do so we need to change some variables into factors, and run a logistic regression, comparing low scores to high scores.
 
@@ -239,7 +239,7 @@ list(lr_est, ols_est1, ols_est2, lr_AIC, ols_AIC1, ols_AIC2)
 }
 ```
 
-#### Model comparisons 
+### Model comparisons 
 
 
 ```r
@@ -254,7 +254,7 @@ glue("AIC score of logistic regression: {model_data(df)[4]}
 ## AIC score of OLS regression (with continuous DV): 15458.3861723106
 ```
 
-#### Logistic regression model 
+### Logistic regression model 
 
 
 ```r

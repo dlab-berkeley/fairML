@@ -160,7 +160,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.1" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#create-a-function-1"><i class="fa fa-check"></i><b>3.3.1</b> Create a function</a></li>
 <li class="chapter" data-level="3.3.2" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#apply-the-function-to-the-data-1"><i class="fa fa-check"></i><b>3.3.2</b> Apply the function to the data</a></li>
 <li class="chapter" data-level="3.3.3" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#descriptive-analysis-1"><i class="fa fa-check"></i><b>3.3.3</b> Descriptive analysis</a></li>
-<li class="chapter" data-level="3.3.4" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#modeling-1"><i class="fa fa-check"></i><b>3.3.4</b> Modeling</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#modeling-1"><i class="fa fa-check"></i><b>3.4</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#model-comparisons-1"><i class="fa fa-check"></i><b>3.4.1</b> Model comparisons</a></li>
+<li class="chapter" data-level="3.4.2" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#logistic-regression-model-1"><i class="fa fa-check"></i><b>3.4.2</b> Logistic regression model</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html"><i class="fa fa-check"></i><b>4</b> Bias in the algorithm</a>
@@ -335,8 +339,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb45-7"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb45-7"></a>               <span class="dt">Title =</span> <span class="st">&quot;Defendant&#39;s Decile Score&quot;</span>)</span></code></pre></div>
 <p><img src="02_risk_of_violent_recidivism_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
-<div id="modeling-1" class="section level3" number="3.3.4">
-<h3><span class="header-section-number">3.3.4</span> Modeling</h3>
+</div>
+<div id="modeling-1" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Modeling</h2>
 <p>After filtering out bad rows, our first question is whether there is a significant difference in COMPAS scores between races. To do so we need to change some variables into factors, and run a logistic regression, comparing low scores to high scores.</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb46-1"></a>model_data &lt;-<span class="st"> </span><span class="cf">function</span>(data){</span>
 <span id="cb46-2"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb46-2"></a></span>
@@ -368,8 +373,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb46-28"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb46-28"></a>    </span>
 <span id="cb46-29"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb46-29"></a><span class="kw">list</span>(lr_est, ols_est1, ols_est2, lr_AIC, ols_AIC1, ols_AIC2)</span>
 <span id="cb46-30"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb46-30"></a>}</span></code></pre></div>
-<div id="model-comparisons-1" class="section level4" number="3.3.4.1">
-<h4><span class="header-section-number">3.3.4.1</span> Model comparisons</h4>
+<div id="model-comparisons-1" class="section level3" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Model comparisons</h3>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb47-1"></a><span class="kw">glue</span>(<span class="st">&quot;AIC score of logistic regression: {model_data(df)[4]} </span></span>
 <span id="cb47-2"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb47-2"></a><span class="st">      AIC score of OLS regression (with categorical DV):  {model_data(df)[5]}</span></span>
 <span id="cb47-3"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb47-3"></a><span class="st">      AIC score of OLS regression (with continuous DV): {model_data(df)[6]}&quot;</span>)</span></code></pre></div>
@@ -377,8 +382,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## AIC score of OLS regression (with categorical DV):  5414.49127581608
 ## AIC score of OLS regression (with continuous DV): 15458.3861723106</code></pre>
 </div>
-<div id="logistic-regression-model-1" class="section level4" number="3.3.4.2">
-<h4><span class="header-section-number">3.3.4.2</span> Logistic regression model</h4>
+<div id="logistic-regression-model-1" class="section level3" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> Logistic regression model</h3>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb49-1"></a>lr_model &lt;-<span class="st"> </span><span class="kw">model_data</span>(df)[<span class="dv">1</span>] <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb49-2"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb49-2"></a><span class="st">  </span><span class="kw">data.frame</span>()</span>
 <span id="cb49-3"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb49-3"></a></span>
@@ -417,7 +422,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb50-23"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#cb50-23"></a><span class="st">        </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
 <p><img src="02_risk_of_violent_recidivism_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 
-</div>
 </div>
 </div>
 </div>
