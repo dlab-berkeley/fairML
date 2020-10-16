@@ -1,6 +1,6 @@
-# Risk of Violent Recidivism
+# Bias in the algorithm 
 
-- In order to test whether Compas scores do an accurate job of deciding whether an offender is Low, Medium or High risk, we ran a Cox Proportional Hazards model. Northpointe, the company that created COMPAS and markets it to Law Enforcement, also ran a Cox model in [their validation study](https://journals.sagepub.com/doi/abs/10.1177/0093854808326545).
+- In order to test whether COMPAS scores do an accurate job of deciding whether an offender is Low, Medium or High risk, we ran a Cox Proportional Hazards model. Northpointe, the company that created COMPAS and markets it to Law Enforcement, also ran a Cox model in [their validation study](https://journals.sagepub.com/doi/abs/10.1177/0093854808326545).
 
 - We used the counting model and removed people when they were incarcerated. Due to errors in the underlying jail data, we need to filter out 32 rows that have an end date more than the start date. Considering that there are 13,334 total rows in the data, such a small amount of errors will not affect the results.
 
@@ -138,6 +138,7 @@ Black defendants do recidivate at higher rates according to race specific Kaplan
 
 (df %>% filter(race == "Caucasian") %>% visualize_surv() + ggtitle("Caucasian")) /
 (df %>% filter(race == "African-American") %>% visualize_surv() + ggtitle("African-American")) 
+
 ```
 
 In terms of underlying recidivism rates, we can look at gender specific Kaplan Meier estimates. There is a striking difference between women and men.
@@ -154,7 +155,7 @@ As these plots show, the COMPAS score treats a High risk women the same as a Med
 
 ### Risk of Recidivism Accuracy 
 
-The above analysis shows that the Compas algorithm does overpredict African-American defendant's future recidivism, but we haven't yet explored the direction of the bias. We can discover fine differences in overprediction and underprediction by comparing Compas scores across racial lines.
+The above analysis shows that the COMPAS algorithm does overpredict African-American defendant's future recidivism, but we haven't yet explored the direction of the bias. We can discover fine differences in overprediction and underprediction by comparing COMPAS scores across racial lines.
 
 ```{r cache=TRUE}
 
@@ -226,12 +227,24 @@ def create_table(x, y):
 - All defenders 
 
 ```{python}
-create_table(list(recid), list(surv))
+
+create_table(list(recid), list(surv)).to_csv("data/table_recid.csv")
+
 ``` 
+
+```{r}
+
+read.csv(here("data", "table_recid.csv"))[,-1] %>%
+  ggplot(aes(x = Metrics, y = Scores)) +
+  geom_col() +
+  labs(title = "Recidivism")
+
+```
 
 That number is higher for African Americans at 44.85% and lower for whites at 23.45%.
 
 ```{python}
+
 def create_comp_tables(recid_data, surv_data):
   
     # filtering variables 
@@ -239,27 +252,40 @@ def create_comp_tables(recid_data, surv_data):
     is_white = is_race("Caucasian")
   
     # dfs 
-    df1 = create_table(filter(is_afam, recid_data), filter(is_afam, surv_data))
-    df2 = create_table(filter(is_white, recid_data), filter(is_white, surv_data))
+    df1 = create_table(filter(is_afam, recid_data),
+                       filter(is_afam, surv_data))
+  
+    df2 = create_table(filter(is_white, recid_data), 
+                       filter(is_white, surv_data))
   
     # concat 
     dfs = pd.concat([df1, df2])
+    
+    dfs['Group'] = ['African Americans','African Americans','Whites','Whites']
+    
+    return(dfs)
+    
 ```
 
-
 ```{python}
-# Add group column 
-    dfs['Groups'] = ['African Americans','African Americans','Whites','Whites']
-  
-    return(dfs)   
 
-create_comp_tables(recid, surv)
+create_comp_tables(recid, surv).to_csv("data/comp_tables_recid.csv")
+
+```
+
+```{r}
+
+read.csv(here("data", "comp_tables_recid.csv"))[,-1] %>%
+  ggplot(aes(x = Metrics, y = Scores, fill = Group)) +
+  geom_col(position = "dodge") +
+  coord_flip() +
+  labs(title = "Recidivism")
 
 ```
 
 ### Risk of violent recidivism
 
-Compas also offers a score that aims to measure a persons risk of violent recidivism, which has a similar overall accuracy to the Recidivism score.
+COMPAS also offers a score that aims to measure a persons risk of violent recidivism, which has a similar overall accuracy to the Recidivism score.
 
 ```{python}
 
@@ -287,15 +313,38 @@ vsurv = [i for i in vpop if i not in vrset]
 
 ```{python}
 
-create_table(vrecid, vsurv)
+create_table(vrecid, vsurv).to_csv("data/table_vrecid.csv")
 
 ```
+
+```{r}
+
+read.csv(here("data", "table_vrecid.csv"))[,-1] %>%
+  ggplot(aes(x = Metrics, y = Scores)) +
+  geom_col() +
+  labs(title = "Violent recidivism")
+
+```
+
 
 Even more so for Black defendants.
 
 ````{python}
-create_comp_tables(vrecid, vsurv)
+
+create_comp_tables(vrecid, vsurv).to_csv("data/comp_tables_vrecid.csv")
+
 ```
+
+```{r}
+
+read.csv(here("data", "comp_tables_vrecid.csv"))[,-1] %>%
+  ggplot(aes(x = Metrics, y = Scores, fill = Group)) +
+  geom_col(position = "dodge") +
+  coord_flip() +
+  labs(title = "Violent recidivism")
+
+```
+
 
 
 

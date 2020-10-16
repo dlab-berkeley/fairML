@@ -1,4 +1,4 @@
-# Risk of Recidivism Analysis
+# Bias in the Data (Risk of Recidivism Analysis)
 
 ## Setup 
 
