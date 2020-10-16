@@ -10,4 +10,4 @@ git commit -m "Update the book" || true
 
 git pull
 
-git push -u origin main
+git push -u origin master
