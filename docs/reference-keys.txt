@@ -1,4 +1,4 @@
-redoing-propublica-analysis-of-the-compas-dataset
+redoing-propublicas-analysis-of-the-compas-dataset
 bias-in-the-data-risk-of-recidivism-analysis
 setup
 load-data

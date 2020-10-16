@@ -152,7 +152,7 @@ df %>%
 
 <img src="03_algorithm_accuracy_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
-### Modeling 
+## Modeling 
 
 
 ```r
@@ -225,7 +225,7 @@ In terms of underlying recidivism rates, we can look at gender specific Kaplan M
 
 As these plots show, the COMPAS score treats a High risk women the same as a Medium risk man.
 
-### Risk of Recidivism Accuracy 
+### Risk of Recidivism accuracy 
 
 The above analysis shows that the COMPAS algorithm does overpredict African-American defendant's future recidivism, but we haven't yet explored the direction of the bias. We can discover fine differences in overprediction and underprediction by comparing COMPAS scores across racial lines.
 

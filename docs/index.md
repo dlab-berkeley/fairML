@@ -18,9 +18,9 @@ description: "Fairness and Bias in Machine Learning Workshop"
 
 
 
-# Redoing ProPublica Analysis of the COMPAS dataset
+# Redoing ProPublica's Analysis of the COMPAS dataset
 
-We have revised the ProPublica's Analysis of the COMPAS dataset to increase code readability and make changing data analysis and visualization easier.
+This Fairness and Bias in Machine Learning workshop has revised the ProPublica's Analysis of the COMPAS dataset to increase code readability and blend it with other references.
 
 1. Bias in the data 
 - Logistic regression analysis 

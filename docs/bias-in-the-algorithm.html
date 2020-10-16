@@ -133,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Redoing ProPublica Analysis of the COMPAS dataset</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Redoing ProPublica’s Analysis of the COMPAS dataset</a></li>
 <li class="chapter" data-level="2" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html"><i class="fa fa-check"></i><b>2</b> Bias in the Data (Risk of Recidivism Analysis)</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#setup"><i class="fa fa-check"></i><b>2.1</b> Setup</a></li>
@@ -170,9 +170,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#wrangling-2"><i class="fa fa-check"></i><b>4.3</b> Wrangling</a>
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#descriptive-analysis-2"><i class="fa fa-check"></i><b>4.3.1</b> Descriptive analysis</a></li>
-<li class="chapter" data-level="4.3.2" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#modeling-2"><i class="fa fa-check"></i><b>4.3.2</b> Modeling</a></li>
-<li class="chapter" data-level="4.3.3" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#risk-of-recidivism-accuracy"><i class="fa fa-check"></i><b>4.3.3</b> Risk of Recidivism Accuracy</a></li>
-<li class="chapter" data-level="4.3.4" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#risk-of-violent-recidivism"><i class="fa fa-check"></i><b>4.3.4</b> Risk of violent recidivism</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#modeling-2"><i class="fa fa-check"></i><b>4.4</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#risk-of-recidivism-accuracy"><i class="fa fa-check"></i><b>4.4.1</b> Risk of Recidivism accuracy</a></li>
+<li class="chapter" data-level="4.4.2" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#risk-of-violent-recidivism"><i class="fa fa-check"></i><b>4.4.2</b> Risk of violent recidivism</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -294,8 +296,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb65-7"><a href="bias-in-the-algorithm.html#cb65-7"></a>               <span class="dt">Title =</span> <span class="st">&quot;Defendant&#39;s Decile Score&quot;</span>)</span></code></pre></div>
 <p><img src="03_algorithm_accuracy_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
-<div id="modeling-2" class="section level3" number="4.3.2">
-<h3><span class="header-section-number">4.3.2</span> Modeling</h3>
+</div>
+<div id="modeling-2" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Modeling</h2>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="bias-in-the-algorithm.html#cb66-1"></a>f2 &lt;-<span class="st"> </span><span class="kw">Surv</span>(start, end, event, <span class="dt">type=</span><span class="st">&quot;counting&quot;</span>) <span class="op">~</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>score_factor <span class="op">+</span><span class="st"> </span>race <span class="op">*</span><span class="st"> </span>score_factor</span>
 <span id="cb66-2"><a href="bias-in-the-algorithm.html#cb66-2"></a></span>
 <span id="cb66-3"><a href="bias-in-the-algorithm.html#cb66-3"></a>model &lt;-<span class="st"> </span><span class="kw">coxph</span>(f2, <span class="dt">data =</span> df)</span>
@@ -338,9 +341,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb70-3"><a href="bias-in-the-algorithm.html#cb70-3"></a>(df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(sex <span class="op">==</span><span class="st"> &quot;Male&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">visualize_surv</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Male&quot;</span>))</span></code></pre></div>
 <p><img src="03_algorithm_accuracy_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>As these plots show, the COMPAS score treats a High risk women the same as a Medium risk man.</p>
-</div>
-<div id="risk-of-recidivism-accuracy" class="section level3" number="4.3.3">
-<h3><span class="header-section-number">4.3.3</span> Risk of Recidivism Accuracy</h3>
+<div id="risk-of-recidivism-accuracy" class="section level3" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Risk of Recidivism accuracy</h3>
 <p>The above analysis shows that the COMPAS algorithm does overpredict African-American defendant’s future recidivism, but we haven’t yet explored the direction of the bias. We can discover fine differences in overprediction and underprediction by comparing COMPAS scores across racial lines.</p>
 <div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="bias-in-the-algorithm.html#cb71-1"></a><span class="co"># create a new environment </span></span>
 <span id="cb71-2"><a href="bias-in-the-algorithm.html#cb71-2"></a><span class="kw">conda_create</span>(<span class="st">&quot;r-reticulate&quot;</span>)</span></code></pre></div>
@@ -428,8 +430,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb82-5"><a href="bias-in-the-algorithm.html#cb82-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Recidivism&quot;</span>)</span></code></pre></div>
 <p><img src="03_algorithm_accuracy_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 </div>
-<div id="risk-of-violent-recidivism" class="section level3" number="4.3.4">
-<h3><span class="header-section-number">4.3.4</span> Risk of violent recidivism</h3>
+<div id="risk-of-violent-recidivism" class="section level3" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Risk of violent recidivism</h3>
 <p>COMPAS also offers a score that aims to measure a persons risk of violent recidivism, which has a similar overall accuracy to the Recidivism score.</p>
 <div class="sourceCode" id="cb83"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb83-1"><a href="bias-in-the-algorithm.html#cb83-1"></a></span>
 <span id="cb83-2"><a href="bias-in-the-algorithm.html#cb83-2"></a>vpeople <span class="op">=</span> []</span>
