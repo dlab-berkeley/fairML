@@ -1,4 +1,4 @@
-# Risk of Violent Recidivism
+# Bias in the Data (Risk of Violent Recidivism Analysis)
 
 ## Setup 
 
@@ -60,7 +60,7 @@ two_years_violent <- read_csv(here("data" ,"compas-scores-two-years-violent.csv"
 
 ```
 ## 
-## ── Column specification ─────────────────────────
+## ── Column specification ───────────────────────
 ## cols(
 ##   .default = col_double(),
 ##   name = col_character(),

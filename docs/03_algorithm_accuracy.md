@@ -1,6 +1,6 @@
-# Risk of Violent Recidivism
+# Bias in the algorithm 
 
-- In order to test whether Compas scores do an accurate job of deciding whether an offender is Low, Medium or High risk, we ran a Cox Proportional Hazards model. Northpointe, the company that created COMPAS and markets it to Law Enforcement, also ran a Cox model in [their validation study](https://journals.sagepub.com/doi/abs/10.1177/0093854808326545).
+- In order to test whether COMPAS scores do an accurate job of deciding whether an offender is Low, Medium or High risk, we ran a Cox Proportional Hazards model. Northpointe, the company that created COMPAS and markets it to Law Enforcement, also ran a Cox model in [their validation study](https://journals.sagepub.com/doi/abs/10.1177/0093854808326545).
 
 - We used the counting model and removed people when they were incarcerated. Due to errors in the underlying jail data, we need to filter out 32 rows that have an end date more than the start date. Considering that there are 13,334 total rows in the data, such a small amount of errors will not affect the results.
 
@@ -65,7 +65,7 @@ cox_data <- read_csv(here("data" ,"cox-parsed.csv"))
 
 ```
 ## 
-## ── Column specification ─────────────────────────
+## ── Column specification ───────────────────────
 ## cols(
 ##   .default = col_character(),
 ##   id = col_double(),
@@ -227,7 +227,7 @@ As these plots show, the COMPAS score treats a High risk women the same as a Med
 
 ### Risk of Recidivism Accuracy 
 
-The above analysis shows that the Compas algorithm does overpredict African-American defendant's future recidivism, but we haven't yet explored the direction of the bias. We can discover fine differences in overprediction and underprediction by comparing Compas scores across racial lines.
+The above analysis shows that the COMPAS algorithm does overpredict African-American defendant's future recidivism, but we haven't yet explored the direction of the bias. We can discover fine differences in overprediction and underprediction by comparing COMPAS scores across racial lines.
 
 
 ```r
@@ -306,14 +306,19 @@ def create_table(x, y):
 
 
 ```python
-create_table(list(recid), list(surv))
+
+create_table(list(recid), list(surv)).to_csv("data/table_recid.csv")
 ```
 
+
+```r
+read.csv(here("data", "table_recid.csv"))[,-1] %>%
+  ggplot(aes(x = Metrics, y = Scores)) +
+  geom_col() +
+  labs(title = "Recidivism")
 ```
-##                Metrics     Scores
-## 0  False positive rate  32.349230
-## 1  False negative rate  37.403876
-```
+
+<img src="03_algorithm_accuracy_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 That number is higher for African Americans at 44.85% and lower for whites at 23.45%.
 
@@ -327,33 +332,41 @@ def create_comp_tables(recid_data, surv_data):
     is_white = is_race("Caucasian")
   
     # dfs 
-    df1 = create_table(filter(is_afam, recid_data), filter(is_afam, surv_data))
-    df2 = create_table(filter(is_white, recid_data), filter(is_white, surv_data))
+    df1 = create_table(filter(is_afam, recid_data),
+                       filter(is_afam, surv_data))
+  
+    df2 = create_table(filter(is_white, recid_data), 
+                       filter(is_white, surv_data))
   
     # concat 
     dfs = pd.concat([df1, df2])
-  
-    # Add group column 
-    dfs['Groups'] = ['African Americans','African Americans','Whites','Whites']
-  
-    return(dfs)   
-
-create_comp_tables(recid, surv)
+    
+    dfs['Group'] = ['African Americans','African Americans','Whites','Whites']
+    
+    return(dfs)
+    
 ```
 
+
+```python
+
+create_comp_tables(recid, surv).to_csv("data/comp_tables_recid.csv")
 ```
-##                Metrics  ...             Groups
-## 0  False positive rate  ...  African Americans
-## 1  False negative rate  ...  African Americans
-## 0  False positive rate  ...             Whites
-## 1  False negative rate  ...             Whites
-## 
-## [4 rows x 3 columns]
+
+
+```r
+read.csv(here("data", "comp_tables_recid.csv"))[,-1] %>%
+  ggplot(aes(x = Metrics, y = Scores, fill = Group)) +
+  geom_col(position = "dodge") +
+  coord_flip() +
+  labs(title = "Recidivism")
 ```
+
+<img src="03_algorithm_accuracy_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 ### Risk of violent recidivism
 
-Compas also offers a score that aims to measure a persons risk of violent recidivism, which has a similar overall accuracy to the Recidivism score.
+COMPAS also offers a score that aims to measure a persons risk of violent recidivism, which has a similar overall accuracy to the Recidivism score.
 
 
 ```python
@@ -383,31 +396,39 @@ vsurv = [i for i in vpop if i not in vrset]
 
 ```python
 
-create_table(vrecid, vsurv)
+create_table(vrecid, vsurv).to_csv("data/table_vrecid.csv")
 ```
 
+
+```r
+read.csv(here("data", "table_vrecid.csv"))[,-1] %>%
+  ggplot(aes(x = Metrics, y = Scores)) +
+  geom_col() +
+  labs(title = "Violent recidivism")
 ```
-##                Metrics     Scores
-## 0  False positive rate  37.705491
-## 1  False negative rate  33.288043
-```
+
+<img src="03_algorithm_accuracy_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+
 
 Even more so for Black defendants.
 
 
 ```python
-create_comp_tables(vrecid, vsurv)
+
+create_comp_tables(vrecid, vsurv).to_csv("data/comp_tables_vrecid.csv")
 ```
 
+
+```r
+read.csv(here("data", "comp_tables_vrecid.csv"))[,-1] %>%
+  ggplot(aes(x = Metrics, y = Scores, fill = Group)) +
+  geom_col(position = "dodge") +
+  coord_flip() +
+  labs(title = "Violent recidivism")
 ```
-##                Metrics  ...             Groups
-## 0  False positive rate  ...  African Americans
-## 1  False negative rate  ...  African Americans
-## 0  False positive rate  ...             Whites
-## 1  False negative rate  ...             Whites
-## 
-## [4 rows x 3 columns]
-```
+
+<img src="03_algorithm_accuracy_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+
 
 
 

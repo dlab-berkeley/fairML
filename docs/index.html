@@ -27,7 +27,7 @@
 <meta name="author" content="Avery Richard" />
 
 
-<meta name="date" content="2020-10-13" />
+<meta name="date" content="2020-10-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,7 +35,7 @@
   
   
 
-<link rel="next" href="risk-of-recidivism-analysis.html"/>
+<link rel="next" href="bias-in-the-data-risk-of-recidivism-analysis.html"/>
 <script src="libs/header-attrs-2.4/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -134,45 +134,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Redoing ProPublica Analysis of the COMPAS dataset</a></li>
-<li class="chapter" data-level="2" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html"><i class="fa fa-check"></i><b>2</b> Risk of Recidivism Analysis</a>
+<li class="chapter" data-level="2" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html"><i class="fa fa-check"></i><b>2</b> Bias in the Data (Risk of Recidivism Analysis)</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html#setup"><i class="fa fa-check"></i><b>2.1</b> Setup</a></li>
-<li class="chapter" data-level="2.2" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html#load-data"><i class="fa fa-check"></i><b>2.2</b> Load data</a></li>
-<li class="chapter" data-level="2.3" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html#wrangling"><i class="fa fa-check"></i><b>2.3</b> Wrangling</a>
+<li class="chapter" data-level="2.1" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#setup"><i class="fa fa-check"></i><b>2.1</b> Setup</a></li>
+<li class="chapter" data-level="2.2" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#load-data"><i class="fa fa-check"></i><b>2.2</b> Load data</a></li>
+<li class="chapter" data-level="2.3" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#wrangling"><i class="fa fa-check"></i><b>2.3</b> Wrangling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html#create-a-function"><i class="fa fa-check"></i><b>2.3.1</b> Create a function</a></li>
-<li class="chapter" data-level="2.3.2" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html#apply-the-function-to-the-data"><i class="fa fa-check"></i><b>2.3.2</b> Apply the function to the data</a></li>
+<li class="chapter" data-level="2.3.1" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#create-a-function"><i class="fa fa-check"></i><b>2.3.1</b> Create a function</a></li>
+<li class="chapter" data-level="2.3.2" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#apply-the-function-to-the-data"><i class="fa fa-check"></i><b>2.3.2</b> Apply the function to the data</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html#descriptive-analysis"><i class="fa fa-check"></i><b>2.4</b> Descriptive analysis</a></li>
-<li class="chapter" data-level="2.5" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html#modeling"><i class="fa fa-check"></i><b>2.5</b> Modeling</a>
+<li class="chapter" data-level="2.4" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#descriptive-analysis"><i class="fa fa-check"></i><b>2.4</b> Descriptive analysis</a></li>
+<li class="chapter" data-level="2.5" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#modeling"><i class="fa fa-check"></i><b>2.5</b> Modeling</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html#model-building"><i class="fa fa-check"></i><b>2.5.1</b> Model building</a></li>
-<li class="chapter" data-level="2.5.2" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html#model-comparisons"><i class="fa fa-check"></i><b>2.5.2</b> Model comparisons</a></li>
-<li class="chapter" data-level="2.5.3" data-path="risk-of-recidivism-analysis.html"><a href="risk-of-recidivism-analysis.html#logistic-regression-model"><i class="fa fa-check"></i><b>2.5.3</b> Logistic regression model</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="risk-of-violent-recidivism.html"><a href="risk-of-violent-recidivism.html"><i class="fa fa-check"></i><b>3</b> Risk of Violent Recidivism</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="risk-of-violent-recidivism.html"><a href="risk-of-violent-recidivism.html#setup-1"><i class="fa fa-check"></i><b>3.1</b> Setup</a></li>
-<li class="chapter" data-level="3.2" data-path="risk-of-violent-recidivism.html"><a href="risk-of-violent-recidivism.html#load-data-1"><i class="fa fa-check"></i><b>3.2</b> Load data</a></li>
-<li class="chapter" data-level="3.3" data-path="risk-of-violent-recidivism.html"><a href="risk-of-violent-recidivism.html#wrangling-1"><i class="fa fa-check"></i><b>3.3</b> Wrangling</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="risk-of-violent-recidivism.html"><a href="risk-of-violent-recidivism.html#create-a-function-1"><i class="fa fa-check"></i><b>3.3.1</b> Create a function</a></li>
-<li class="chapter" data-level="3.3.2" data-path="risk-of-violent-recidivism.html"><a href="risk-of-violent-recidivism.html#apply-the-function-to-the-data-1"><i class="fa fa-check"></i><b>3.3.2</b> Apply the function to the data</a></li>
-<li class="chapter" data-level="3.3.3" data-path="risk-of-violent-recidivism.html"><a href="risk-of-violent-recidivism.html#descriptive-analysis-1"><i class="fa fa-check"></i><b>3.3.3</b> Descriptive analysis</a></li>
-<li class="chapter" data-level="3.3.4" data-path="risk-of-violent-recidivism.html"><a href="risk-of-violent-recidivism.html#modeling-1"><i class="fa fa-check"></i><b>3.3.4</b> Modeling</a></li>
+<li class="chapter" data-level="2.5.1" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#model-building"><i class="fa fa-check"></i><b>2.5.1</b> Model building</a></li>
+<li class="chapter" data-level="2.5.2" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#model-comparisons"><i class="fa fa-check"></i><b>2.5.2</b> Model comparisons</a></li>
+<li class="chapter" data-level="2.5.3" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#logistic-regression-model"><i class="fa fa-check"></i><b>2.5.3</b> Logistic regression model</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="risk-of-violent-recidivism-1.html"><a href="risk-of-violent-recidivism-1.html"><i class="fa fa-check"></i><b>4</b> Risk of Violent Recidivism</a>
+<li class="chapter" data-level="3" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><i class="fa fa-check"></i><b>3</b> Bias in the Data (Risk of Violent Recidivism Analysis)</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="risk-of-violent-recidivism-1.html"><a href="risk-of-violent-recidivism-1.html#setup-2"><i class="fa fa-check"></i><b>4.1</b> Setup</a></li>
-<li class="chapter" data-level="4.2" data-path="risk-of-violent-recidivism-1.html"><a href="risk-of-violent-recidivism-1.html#load-data-2"><i class="fa fa-check"></i><b>4.2</b> Load data</a></li>
-<li class="chapter" data-level="4.3" data-path="risk-of-violent-recidivism-1.html"><a href="risk-of-violent-recidivism-1.html#wrangling-2"><i class="fa fa-check"></i><b>4.3</b> Wrangling</a>
+<li class="chapter" data-level="3.1" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#setup-1"><i class="fa fa-check"></i><b>3.1</b> Setup</a></li>
+<li class="chapter" data-level="3.2" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#load-data-1"><i class="fa fa-check"></i><b>3.2</b> Load data</a></li>
+<li class="chapter" data-level="3.3" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#wrangling-1"><i class="fa fa-check"></i><b>3.3</b> Wrangling</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="risk-of-violent-recidivism-1.html"><a href="risk-of-violent-recidivism-1.html#descriptive-analysis-2"><i class="fa fa-check"></i><b>4.3.1</b> Descriptive analysis</a></li>
-<li class="chapter" data-level="4.3.2" data-path="risk-of-violent-recidivism-1.html"><a href="risk-of-violent-recidivism-1.html#modeling-2"><i class="fa fa-check"></i><b>4.3.2</b> Modeling</a></li>
-<li class="chapter" data-level="4.3.3" data-path="risk-of-violent-recidivism-1.html"><a href="risk-of-violent-recidivism-1.html#risk-of-recidivism-accuracy"><i class="fa fa-check"></i><b>4.3.3</b> Risk of Recidivism Accuracy</a></li>
-<li class="chapter" data-level="4.3.4" data-path="risk-of-violent-recidivism-1.html"><a href="risk-of-violent-recidivism-1.html#risk-of-violent-recidivism-2"><i class="fa fa-check"></i><b>4.3.4</b> Risk of violent recidivism</a></li>
+<li class="chapter" data-level="3.3.1" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#create-a-function-1"><i class="fa fa-check"></i><b>3.3.1</b> Create a function</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#apply-the-function-to-the-data-1"><i class="fa fa-check"></i><b>3.3.2</b> Apply the function to the data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#descriptive-analysis-1"><i class="fa fa-check"></i><b>3.3.3</b> Descriptive analysis</a></li>
+<li class="chapter" data-level="3.3.4" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#modeling-1"><i class="fa fa-check"></i><b>3.3.4</b> Modeling</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html"><i class="fa fa-check"></i><b>4</b> Bias in the algorithm</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#setup-2"><i class="fa fa-check"></i><b>4.1</b> Setup</a></li>
+<li class="chapter" data-level="4.2" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#load-data-2"><i class="fa fa-check"></i><b>4.2</b> Load data</a></li>
+<li class="chapter" data-level="4.3" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#wrangling-2"><i class="fa fa-check"></i><b>4.3</b> Wrangling</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#descriptive-analysis-2"><i class="fa fa-check"></i><b>4.3.1</b> Descriptive analysis</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#modeling-2"><i class="fa fa-check"></i><b>4.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#risk-of-recidivism-accuracy"><i class="fa fa-check"></i><b>4.3.3</b> Risk of Recidivism Accuracy</a></li>
+<li class="chapter" data-level="4.3.4" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#risk-of-violent-recidivism"><i class="fa fa-check"></i><b>4.3.4</b> Risk of violent recidivism</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -198,7 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p class="author"><em>Aniket Kesari</em></p>
 <p class="author"><em>Renata Barreto</em></p>
 <p class="author"><em>Avery Richard</em></p>
-<p class="date"><em>2020-10-13</em></p>
+<p class="date"><em>2020-10-16</em></p>
 </div>
 <div id="redoing-propublica-analysis-of-the-compas-dataset" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Redoing ProPublica Analysis of the COMPAS dataset</h1>
@@ -232,7 +232,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 
-<a href="risk-of-recidivism-analysis.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bias-in-the-data-risk-of-recidivism-analysis.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

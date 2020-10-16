@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Bias in the Data (Risk of Recidivism Analysis) | Fairness and Bias in Machine Learning Workshop</title>
+  <meta name="description" content="Chapter 2 Bias in the Data (Risk of Recidivism Analysis) | Fairness and Bias in Machine Learning Workshop" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Bias in the Data (Risk of Recidivism Analysis) | Fairness and Bias in Machine Learning Workshop" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Chapter 2 Bias in the Data (Risk of Recidivism Analysis) | Fairness and Bias in Machine Learning Workshop" />
+  <meta name="github-repo" content="dlab-berkeley/fairMLworkshop" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Bias in the Data (Risk of Recidivism Analysis) | Fairness and Bias in Machine Learning Workshop" />
+  
+  <meta name="twitter:description" content="Chapter 2 Bias in the Data (Risk of Recidivism Analysis) | Fairness and Bias in Machine Learning Workshop" />
+  
+
+<meta name="author" content="Jae Yeon Kim" />
+<meta name="author" content="Aniket Kesari" />
+<meta name="author" content="Renata Barreto" />
+<meta name="author" content="Avery Richard" />
+
+
+<meta name="date" content="2020-10-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="bias-in-the-data-risk-of-violent-recidivism-analysis.html"/>
+<script src="libs/header-attrs-2.4/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Redoing ProPublica Analysis of the COMPAS dataset</a></li>
+<li class="chapter" data-level="2" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html"><i class="fa fa-check"></i><b>2</b> Bias in the Data (Risk of Recidivism Analysis)</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#setup"><i class="fa fa-check"></i><b>2.1</b> Setup</a></li>
+<li class="chapter" data-level="2.2" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#load-data"><i class="fa fa-check"></i><b>2.2</b> Load data</a></li>
+<li class="chapter" data-level="2.3" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#wrangling"><i class="fa fa-check"></i><b>2.3</b> Wrangling</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#create-a-function"><i class="fa fa-check"></i><b>2.3.1</b> Create a function</a></li>
+<li class="chapter" data-level="2.3.2" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#apply-the-function-to-the-data"><i class="fa fa-check"></i><b>2.3.2</b> Apply the function to the data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#descriptive-analysis"><i class="fa fa-check"></i><b>2.4</b> Descriptive analysis</a></li>
+<li class="chapter" data-level="2.5" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#modeling"><i class="fa fa-check"></i><b>2.5</b> Modeling</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#model-building"><i class="fa fa-check"></i><b>2.5.1</b> Model building</a></li>
+<li class="chapter" data-level="2.5.2" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#model-comparisons"><i class="fa fa-check"></i><b>2.5.2</b> Model comparisons</a></li>
+<li class="chapter" data-level="2.5.3" data-path="bias-in-the-data-risk-of-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#logistic-regression-model"><i class="fa fa-check"></i><b>2.5.3</b> Logistic regression model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><i class="fa fa-check"></i><b>3</b> Bias in the Data (Risk of Violent Recidivism Analysis)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#setup-1"><i class="fa fa-check"></i><b>3.1</b> Setup</a></li>
+<li class="chapter" data-level="3.2" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#load-data-1"><i class="fa fa-check"></i><b>3.2</b> Load data</a></li>
+<li class="chapter" data-level="3.3" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#wrangling-1"><i class="fa fa-check"></i><b>3.3</b> Wrangling</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#create-a-function-1"><i class="fa fa-check"></i><b>3.3.1</b> Create a function</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#apply-the-function-to-the-data-1"><i class="fa fa-check"></i><b>3.3.2</b> Apply the function to the data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#descriptive-analysis-1"><i class="fa fa-check"></i><b>3.3.3</b> Descriptive analysis</a></li>
+<li class="chapter" data-level="3.3.4" data-path="bias-in-the-data-risk-of-violent-recidivism-analysis.html"><a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html#modeling-1"><i class="fa fa-check"></i><b>3.3.4</b> Modeling</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html"><i class="fa fa-check"></i><b>4</b> Bias in the algorithm</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#setup-2"><i class="fa fa-check"></i><b>4.1</b> Setup</a></li>
+<li class="chapter" data-level="4.2" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#load-data-2"><i class="fa fa-check"></i><b>4.2</b> Load data</a></li>
+<li class="chapter" data-level="4.3" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#wrangling-2"><i class="fa fa-check"></i><b>4.3</b> Wrangling</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#descriptive-analysis-2"><i class="fa fa-check"></i><b>4.3.1</b> Descriptive analysis</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#modeling-2"><i class="fa fa-check"></i><b>4.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#risk-of-recidivism-accuracy"><i class="fa fa-check"></i><b>4.3.3</b> Risk of Recidivism Accuracy</a></li>
+<li class="chapter" data-level="4.3.4" data-path="bias-in-the-algorithm.html"><a href="bias-in-the-algorithm.html#risk-of-violent-recidivism"><i class="fa fa-check"></i><b>4.3.4</b> Risk of violent recidivism</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Fairness and Bias in Machine Learning Workshop</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bias-in-the-data-risk-of-recidivism-analysis" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Bias in the Data (Risk of Recidivism Analysis)</h1>
+<div id="setup" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Setup</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb1-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">&quot;pacman&quot;</span>)) <span class="kw">install.packages</span>(<span class="st">&quot;pacman&quot;</span>)</span></code></pre></div>
+<pre><code>## Loading required package: pacman</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-1"></a>pacman<span class="op">::</span><span class="kw">p_load</span>(</span>
+<span id="cb3-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-2"></a> tidyverse, <span class="co"># tidyverse packages </span></span>
+<span id="cb3-3"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-3"></a> conflicted, <span class="co"># an alternative conflict resolution strategy </span></span>
+<span id="cb3-4"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-4"></a> ggthemes, <span class="co"># other themes for ggplot2 </span></span>
+<span id="cb3-5"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-5"></a> patchwork, <span class="co"># arranging ggplots</span></span>
+<span id="cb3-6"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-6"></a> scales, <span class="co"># rescaling </span></span>
+<span id="cb3-7"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-7"></a> survival, <span class="co"># survival analysis</span></span>
+<span id="cb3-8"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-8"></a> broom, <span class="co"># for modeling</span></span>
+<span id="cb3-9"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-9"></a> here, <span class="co"># reproducibility </span></span>
+<span id="cb3-10"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-10"></a> glue <span class="co"># pasting strings and objects </span></span>
+<span id="cb3-11"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-11"></a>)</span>
+<span id="cb3-12"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-12"></a></span>
+<span id="cb3-13"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-13"></a><span class="co"># To avoid conflicts </span></span>
+<span id="cb3-14"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb3-14"></a><span class="kw">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>) </span></code></pre></div>
+<pre><code>## [conflicted] Will prefer dplyr::filter over any other package</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb5-1"></a><span class="kw">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>) </span></code></pre></div>
+<pre><code>## [conflicted] Will prefer dplyr::select over any other package</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb7-1"></a><span class="co"># Set themes </span></span>
+<span id="cb7-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb7-2"></a><span class="kw">theme_set</span>(ggthemes<span class="op">::</span><span class="kw">theme_fivethirtyeight</span>())</span></code></pre></div>
+</div>
+<div id="load-data" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Load data</h2>
+<p>We select fields for severity of charge, number of priors, demographics, age, sex, COMPAS scores, and whether each person was accused of a crime within two years.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb8-1"></a>two_years &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;compas-scores-two-years.csv&quot;</span>))</span></code></pre></div>
+<pre><code>## Warning: Duplicated column names deduplicated: &#39;decile_score&#39; =&gt;
+## &#39;decile_score_1&#39; [40], &#39;priors_count&#39; =&gt; &#39;priors_count_1&#39; [49]</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb10-1"></a><span class="kw">glue</span>(<span class="st">&quot;N of observations (rows): {nrow(two_years)}</span></span>
+<span id="cb10-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb10-2"></a><span class="st">      N of variables (columns): {ncol(two_years)}&quot;</span>)</span></code></pre></div>
+<pre><code>## N of observations (rows): 7214
+## N of variables (columns): 53</code></pre>
+</div>
+<div id="wrangling" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Wrangling</h2>
+<ul>
+<li>Not all of the observations are useable for the first round of analysis.</li>
+<li>There are a number of reasons to remove rows because of missing data:
+<ul>
+<li>If the charge date of a defendants COMPAS scored crime was not within 30 days from when the person was arrested, we assume that because of data quality reasons, that we do not have the right offense.</li>
+<li>We coded the recidivist flag – is_recid – to be -1 if we could not find a COMPAS case at all.</li>
+<li>In a similar vein, ordinary traffic offenses – those with a c_charge_degree of ‘O’ – will not result in Jail time are removed (only two of them).</li>
+<li>We filtered the underlying data from Broward county to include only those rows representing people who had either recidivated in two years, or had at least two years outside of a correctional facility.</li>
+</ul></li>
+</ul>
+<div id="create-a-function" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Create a function</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-1"></a>wrangle_data &lt;-<span class="st"> </span><span class="cf">function</span>(data){</span>
+<span id="cb12-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-2"></a></span>
+<span id="cb12-3"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-3"></a>df &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-4"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-4"></a><span class="st">    </span></span>
+<span id="cb12-5"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-5"></a><span class="st">    </span><span class="co"># Select variables </span></span>
+<span id="cb12-6"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-6"></a><span class="st">    </span><span class="kw">select</span>(age, c_charge_degree, race, age_cat, score_text, sex, priors_count, days_b_screening_arrest, decile_score, is_recid, two_year_recid, </span>
+<span id="cb12-7"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-7"></a>         c_jail_in, c_jail_out) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-8"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-8"></a><span class="st">    </span><span class="co"># Filter rows </span></span>
+<span id="cb12-9"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-9"></a><span class="st">    </span><span class="kw">filter</span>(days_b_screening_arrest <span class="op">&lt;=</span><span class="st"> </span><span class="dv">30</span>,</span>
+<span id="cb12-10"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-10"></a>           days_b_screening_arrest <span class="op">&gt;=</span><span class="st"> </span><span class="dv">-30</span>, </span>
+<span id="cb12-11"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-11"></a>           is_recid <span class="op">!=</span><span class="st"> </span><span class="dv">-1</span>,</span>
+<span id="cb12-12"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-12"></a>           c_charge_degree <span class="op">!=</span><span class="st"> &quot;O&quot;</span>,</span>
+<span id="cb12-13"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-13"></a>           score_text <span class="op">!=</span><span class="st"> &#39;N/A&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-14"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-14"></a><span class="st">    </span><span class="co"># Mutate variables </span></span>
+<span id="cb12-15"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-15"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">length_of_stay =</span> <span class="kw">as.numeric</span>(<span class="kw">as.Date</span>(c_jail_out) <span class="op">-</span><span class="st"> </span><span class="kw">as.Date</span>(c_jail_in)),</span>
+<span id="cb12-16"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-16"></a>           <span class="dt">c_charge_degree =</span> <span class="kw">factor</span>(c_charge_degree),</span>
+<span id="cb12-17"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-17"></a>           <span class="dt">age_cat =</span> <span class="kw">factor</span>(age_cat),</span>
+<span id="cb12-18"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-18"></a>           <span class="dt">race =</span> <span class="kw">factor</span>(race, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Caucasian&quot;</span>,<span class="st">&quot;African-American&quot;</span>,<span class="st">&quot;Hispanic&quot;</span>,<span class="st">&quot;Other&quot;</span>,<span class="st">&quot;Asian&quot;</span>,<span class="st">&quot;Native American&quot;</span>)),</span>
+<span id="cb12-19"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-19"></a>           <span class="dt">sex =</span> <span class="kw">factor</span>(sex, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>)),</span>
+<span id="cb12-20"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-20"></a>           <span class="dt">score_text =</span> <span class="kw">factor</span>(score_text, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Low&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;High&quot;</span>)),</span>
+<span id="cb12-21"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-21"></a>           <span class="dt">score =</span> score_text,</span>
+<span id="cb12-22"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-22"></a><span class="co"># I added this new variable to test whether measuring the DV as a binary or continuous var makes a difference </span></span>
+<span id="cb12-23"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-23"></a>           <span class="dt">score_num =</span> <span class="kw">as.numeric</span>(score_text)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-24"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-24"></a><span class="st">    </span><span class="co"># Rename variables </span></span>
+<span id="cb12-25"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-25"></a><span class="st">    </span><span class="kw">rename</span>(<span class="dt">crime =</span> c_charge_degree,</span>
+<span id="cb12-26"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-26"></a>           <span class="dt">gender =</span> sex)</span>
+<span id="cb12-27"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-27"></a>        </span>
+<span id="cb12-28"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb12-28"></a><span class="kw">return</span>(df)}</span></code></pre></div>
+</div>
+<div id="apply-the-function-to-the-data" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Apply the function to the data</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb13-1"></a>df &lt;-<span class="st"> </span><span class="kw">wrangle_data</span>(two_years)</span>
+<span id="cb13-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb13-2"></a></span>
+<span id="cb13-3"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb13-3"></a><span class="kw">names</span>(df)</span></code></pre></div>
+<pre><code>##  [1] &quot;age&quot;                     &quot;crime&quot;                  
+##  [3] &quot;race&quot;                    &quot;age_cat&quot;                
+##  [5] &quot;score_text&quot;              &quot;gender&quot;                 
+##  [7] &quot;priors_count&quot;            &quot;days_b_screening_arrest&quot;
+##  [9] &quot;decile_score&quot;            &quot;is_recid&quot;               
+## [11] &quot;two_year_recid&quot;          &quot;c_jail_in&quot;              
+## [13] &quot;c_jail_out&quot;              &quot;length_of_stay&quot;         
+## [15] &quot;score&quot;                   &quot;score_num&quot;</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb15-1"></a><span class="co"># Check whether the function works as expected</span></span>
+<span id="cb15-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb15-2"></a><span class="kw">head</span>(df, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 16
+##     age crime race  age_cat score_text gender priors_count days_b_screenin…
+##   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;   &lt;fct&gt;      &lt;fct&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+## 1    69 F     Other Greate… Low        Male              0               -1
+## 2    34 F     Afri… 25 - 45 Low        Male              0               -1
+## 3    24 F     Afri… Less t… Low        Male              4               -1
+## 4    44 M     Other 25 - 45 Low        Male              0                0
+## 5    41 F     Cauc… 25 - 45 Medium     Male             14               -1
+## # … with 8 more variables: decile_score &lt;dbl&gt;, is_recid &lt;dbl&gt;,
+## #   two_year_recid &lt;dbl&gt;, c_jail_in &lt;dttm&gt;, c_jail_out &lt;dttm&gt;,
+## #   length_of_stay &lt;dbl&gt;, score &lt;fct&gt;, score_num &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div id="descriptive-analysis" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Descriptive analysis</h2>
+<ul>
+<li>Higher COMPAS scores are slightly correlated with a longer length of stay.</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb17-1"></a><span class="kw">cor</span>(df<span class="op">$</span>length_of_stay, df<span class="op">$</span>decile_score)</span></code></pre></div>
+<pre><code>## [1] 0.2073297</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb19-1"></a>df <span class="op">%&gt;%</span></span>
+<span id="cb19-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb19-2"></a><span class="st">  </span><span class="kw">group_by</span>(score) <span class="op">%&gt;%</span></span>
+<span id="cb19-3"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb19-3"></a><span class="st">  </span><span class="kw">count</span>() <span class="op">%&gt;%</span></span>
+<span id="cb19-4"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb19-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> score, <span class="dt">y =</span> n)) <span class="op">+</span></span>
+<span id="cb19-5"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb19-5"></a><span class="st">    </span><span class="kw">geom_col</span>() <span class="op">+</span></span>
+<span id="cb19-6"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb19-6"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Score&quot;</span>,</span>
+<span id="cb19-7"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb19-7"></a>         <span class="dt">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
+<span id="cb19-8"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb19-8"></a>         <span class="dt">title =</span> <span class="st">&quot;Score distribution&quot;</span>)</span></code></pre></div>
+<p><img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+Judges are often presented with two sets of scores from the COMPAS system – one that classifies people into High, Medium and Low risk, and a corresponding decile score. There is a clear downward trend in the decile scores as those scores increase for white defendants.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb20-1"></a>df <span class="op">%&gt;%</span></span>
+<span id="cb20-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb20-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="kw">ordered</span>(decile_score))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb20-3"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb20-3"></a><span class="st">          </span><span class="kw">geom_bar</span>() <span class="op">+</span></span>
+<span id="cb20-4"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb20-4"></a><span class="st">          </span><span class="kw">facet_wrap</span>(<span class="op">~</span>race, <span class="dt">nrow =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb20-5"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb20-5"></a><span class="st">          </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Decile Score&quot;</span>,</span>
+<span id="cb20-6"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb20-6"></a>               <span class="dt">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
+<span id="cb20-7"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb20-7"></a>               <span class="dt">Title =</span> <span class="st">&quot;Defendant&#39;s Decile Score&quot;</span>)</span></code></pre></div>
+<p><img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="modeling" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Modeling</h2>
+<p>After filtering out bad rows, our first question is whether there is a significant difference in COMPAS scores between races. To do so we need to change some variables into factors, and run a logistic regression, comparing low scores to high scores.</p>
+<div id="model-building" class="section level3" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Model building</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-1"></a>model_data &lt;-<span class="st"> </span><span class="cf">function</span>(data){</span>
+<span id="cb21-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-2"></a></span>
+<span id="cb21-3"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-3"></a><span class="co"># Logistic regression model</span></span>
+<span id="cb21-4"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-4"></a>lr_model &lt;-<span class="st"> </span><span class="kw">glm</span>(score <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age_cat <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>priors_count <span class="op">+</span><span class="st"> </span>crime <span class="op">+</span><span class="st"> </span>two_year_recid, </span>
+<span id="cb21-5"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-5"></a>             <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="dt">data =</span> data)</span>
+<span id="cb21-6"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-6"></a></span>
+<span id="cb21-7"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-7"></a><span class="co"># OLS, DV = score_num</span></span>
+<span id="cb21-8"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-8"></a>ols_model1 &lt;-<span class="st"> </span><span class="kw">lm</span>(score_num <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age_cat <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>priors_count <span class="op">+</span><span class="st"> </span>crime <span class="op">+</span><span class="st"> </span>two_year_recid, <span class="dt">data =</span> data)</span>
+<span id="cb21-9"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-9"></a></span>
+<span id="cb21-10"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-10"></a><span class="co"># OLS, DV = decile_score </span></span>
+<span id="cb21-11"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-11"></a>ols_model2 &lt;-<span class="st"> </span><span class="kw">lm</span>(decile_score <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age_cat <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>priors_count <span class="op">+</span><span class="st"> </span>crime <span class="op">+</span><span class="st"> </span>two_year_recid, <span class="dt">data =</span> data)</span>
+<span id="cb21-12"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-12"></a></span>
+<span id="cb21-13"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-13"></a><span class="co"># Extract model outcomes with confidence intervals </span></span>
+<span id="cb21-14"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-14"></a>lr_est &lt;-<span class="st"> </span>lr_model <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-15"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-15"></a><span class="st">    </span><span class="kw">tidy</span>(<span class="dt">conf.int =</span> <span class="ot">TRUE</span>) </span>
+<span id="cb21-16"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-16"></a></span>
+<span id="cb21-17"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-17"></a>ols_est1 &lt;-<span class="st"> </span>ols_model1 <span class="op">%&gt;%</span></span>
+<span id="cb21-18"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-18"></a><span class="st">    </span><span class="kw">tidy</span>(<span class="dt">conf.int =</span> <span class="ot">TRUE</span>) </span>
+<span id="cb21-19"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-19"></a></span>
+<span id="cb21-20"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-20"></a>ols_est2 &lt;-<span class="st"> </span>ols_model2 <span class="op">%&gt;%</span></span>
+<span id="cb21-21"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-21"></a><span class="st">    </span><span class="kw">tidy</span>(<span class="dt">conf.int =</span> <span class="ot">TRUE</span>) </span>
+<span id="cb21-22"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-22"></a></span>
+<span id="cb21-23"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-23"></a><span class="co"># AIC scores </span></span>
+<span id="cb21-24"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-24"></a>lr_AIC &lt;-<span class="st"> </span><span class="kw">AIC</span>(lr_model)</span>
+<span id="cb21-25"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-25"></a>ols_AIC1 &lt;-<span class="st"> </span><span class="kw">AIC</span>(ols_model1)</span>
+<span id="cb21-26"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-26"></a>ols_AIC2 &lt;-<span class="st"> </span><span class="kw">AIC</span>(ols_model2)</span>
+<span id="cb21-27"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-27"></a>    </span>
+<span id="cb21-28"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-28"></a><span class="kw">list</span>(lr_est, ols_est1, ols_est2, </span>
+<span id="cb21-29"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-29"></a>     lr_AIC, ols_AIC1, ols_AIC2)</span>
+<span id="cb21-30"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-30"></a></span>
+<span id="cb21-31"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb21-31"></a>}</span></code></pre></div>
+</div>
+<div id="model-comparisons" class="section level3" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Model comparisons</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb22-1"></a><span class="kw">glue</span>(<span class="st">&quot;AIC score of logistic regression: {model_data(df)[4]} </span></span>
+<span id="cb22-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb22-2"></a><span class="st">      AIC score of OLS regression (with categorical DV):  {model_data(df)[5]}</span></span>
+<span id="cb22-3"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb22-3"></a><span class="st">      AIC score of OLS regression (with continuous DV): {model_data(df)[6]}&quot;</span>)</span></code></pre></div>
+<pre><code>## AIC score of logistic regression: 6192.40169473357 
+## AIC score of OLS regression (with categorical DV):  11772.1148541111
+## AIC score of OLS regression (with continuous DV): 26779.9512226999</code></pre>
+</div>
+<div id="logistic-regression-model" class="section level3" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> Logistic regression model</h3>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-1"></a>lr_model &lt;-<span class="st"> </span><span class="kw">model_data</span>(df)[<span class="dv">1</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>()</span>
+<span id="cb24-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-2"></a></span>
+<span id="cb24-3"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-3"></a>lr_model <span class="op">%&gt;%</span></span>
+<span id="cb24-4"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-4"></a><span class="st">  </span><span class="kw">filter</span>(term <span class="op">!=</span><span class="st"> &quot;(Intercept)&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb24-5"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">gsub</span>(<span class="st">&quot;race|age_cat|gender|M&quot;</span>,<span class="st">&quot;&quot;</span>, term)) <span class="op">%&gt;%</span></span>
+<span id="cb24-6"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-6"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(term, estimate), <span class="dt">y =</span> estimate, <span class="dt">ymax =</span> conf.high, <span class="dt">ymin =</span> conf.low)) <span class="op">+</span></span>
+<span id="cb24-7"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-7"></a><span class="st">  </span><span class="kw">geom_pointrange</span>() <span class="op">+</span></span>
+<span id="cb24-8"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-8"></a><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb24-9"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Estimate&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb24-10"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-10"></a>      <span class="dt">title =</span> <span class="st">&quot;Logistic regression&quot;</span>) <span class="op">+</span></span>
+<span id="cb24-11"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb24-11"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<p><img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-1"></a>interpret_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(model){</span>
+<span id="cb25-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-2"></a>    </span>
+<span id="cb25-3"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-3"></a>    <span class="co"># Control </span></span>
+<span id="cb25-4"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-4"></a>    intercept &lt;-<span class="st"> </span>model<span class="op">$</span>estimate[model<span class="op">$</span>term <span class="op">==</span><span class="st"> &quot;(Intercept)&quot;</span>]</span>
+<span id="cb25-5"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-5"></a>    control &lt;-<span class="st"> </span><span class="kw">exp</span>(intercept) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(intercept))</span>
+<span id="cb25-6"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-6"></a>    </span>
+<span id="cb25-7"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-7"></a>    <span class="co"># Likelihood </span></span>
+<span id="cb25-8"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-8"></a>    model &lt;-<span class="st"> </span>model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(term <span class="op">!=</span><span class="st"> &quot;(Intercept)&quot;</span>)</span>
+<span id="cb25-9"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-9"></a>    </span>
+<span id="cb25-10"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-10"></a>    model<span class="op">$</span>likelihood &lt;-<span class="st"> </span>(<span class="kw">exp</span>(model<span class="op">$</span>estimate) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>control <span class="op">+</span><span class="st"> </span>(control <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(model<span class="op">$</span>estimate))))</span>
+<span id="cb25-11"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-11"></a>    </span>
+<span id="cb25-12"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-12"></a>    <span class="kw">return</span>(model)</span>
+<span id="cb25-13"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb25-13"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb26-1"></a><span class="kw">interpret_estimate</span>(lr_model) <span class="op">%&gt;%</span></span>
+<span id="cb26-2"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb26-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">gsub</span>(<span class="st">&quot;race|age_cat|gender&quot;</span>,<span class="st">&quot;&quot;</span>, term)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-3"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb26-3"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(term, likelihood), <span class="dt">y =</span> likelihood)) <span class="op">+</span></span>
+<span id="cb26-4"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb26-4"></a><span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb26-5"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb26-5"></a><span class="st">        </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb26-6"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb26-6"></a><span class="st">        </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Likelihood&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb26-7"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb26-7"></a>            <span class="dt">title =</span><span class="st">&quot;Logistic regression&quot;</span>) <span class="op">+</span></span>
+<span id="cb26-8"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb26-8"></a><span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span><span class="kw">percent_format</span>(<span class="dt">accuracy =</span> <span class="dv">1</span>)) <span class="op">+</span></span>
+<span id="cb26-9"><a href="bias-in-the-data-risk-of-recidivism-analysis.html#cb26-9"></a><span class="st">        </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<p><img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bias-in-the-data-risk-of-violent-recidivism-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

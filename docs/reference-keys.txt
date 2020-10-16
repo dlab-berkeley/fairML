@@ -1,5 +1,5 @@
 redoing-propublica-analysis-of-the-compas-dataset
-risk-of-recidivism-analysis
+bias-in-the-data-risk-of-recidivism-analysis
 setup
 load-data
 wrangling
@@ -10,7 +10,7 @@ modeling
 model-building
 model-comparisons
 logistic-regression-model
-risk-of-violent-recidivism
+bias-in-the-data-risk-of-violent-recidivism-analysis
 setup-1
 load-data-1
 wrangling-1
@@ -20,11 +20,11 @@ descriptive-analysis-1
 modeling-1
 model-comparisons-1
 logistic-regression-model-1
-risk-of-violent-recidivism-1
+bias-in-the-algorithm
 setup-2
 load-data-2
 wrangling-2
 descriptive-analysis-2
 modeling-2
 risk-of-recidivism-accuracy
-risk-of-violent-recidivism-2
+risk-of-violent-recidivism
