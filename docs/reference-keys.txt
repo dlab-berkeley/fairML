@@ -1,4 +1,4 @@
-redoing-propublicas-analysis-of-the-compas-dataset
+fairness-and-bias-in-machine-learning-workshop
 bias-in-the-data-risk-of-recidivism-analysis
 setup
 load-data
@@ -27,6 +27,4 @@ wrangling-2
 descriptive-analysis-2
 modeling-2
 risk-of-recidivism-accuracy
-risk-of-violent-recidivism
 risk-of-violent-recidivism-accuracy
-fairness-and-bias-in-machine-learning-workshop
