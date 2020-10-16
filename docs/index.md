@@ -20,7 +20,7 @@ description: "Fairness and Bias in Machine Learning Workshop"
 
 **Overview**
 
-This workshops provides a gentle introduction to the fairness and Bias in machine learning applications with a focus on the ProPublica's Analysis of the COMPAS algorithm. We revised [the ProPublica's original R and Python code](https://github.com/propublica/compas-analysis/blob/master/Compas%20Analysis.ipynb) to increase its code readability, remix it with other references, then published and deployed the revised notebook using bookdown and GitHub page.
+This workshops provides a gentle introduction to the fairness and bias in machine learning applications with a focus on the ProPublica's Analysis of the COMPAS algorithm. We revised [the ProPublica's original R and Python code](https://github.com/propublica/compas-analysis/blob/master/Compas%20Analysis.ipynb) to increase its code readability, remixed it with other references, then published and deployed the revised notebook using bookdown and GitHub page.
 
 ![A gif of defendants being put into an algorithm by SELMAN DESIGN](https://wp.technologyreview.com/wp-content/uploads/2019/10/mit-alg-yb-02-7.gif?fit=1444,962)
 
