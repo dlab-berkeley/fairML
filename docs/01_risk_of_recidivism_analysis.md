@@ -266,18 +266,24 @@ lr_model %>%
 
 <img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
+Logistic regression coefficients are log odds ratios. Remember an odd is $\frac{p}{1-p}$. p could be defined as a success and 1-p could be as a failure. Here, coefficient 1 indicates equal probability for the binary outcomes. Coefficient greater than 1 indicates strong chance for p and weak chance for 1-p. Coefficient smaller than 1 indicates the opposite. Nonetheless, the exact interpretation is not very interpretive as an odd of 2.0 corresponds to the probability of 1/3 (!). 
+
+(To refresh your memory, note that probability is bounded between [0, 1]. Odds ranges between 0 and infinity. Log odds ranges from negative to positive infinity. We're going through this hassle because we used log function to map predictor variables to probability to fit the model to the binary outcomes.)
+
+In this case, we reinterpret coefficients by turning log odds ratios into relative risks. Relative risk = odds ratio / 1 - p0 + (p0 * odds ratio) p-0 is the baseline risk. For more information on relative risks and its value in statistical communication, see [Grant](https://www.bmj.com/content/348/bmj.f7450) (2014), [Wang](https://www.jstatsoft.org/article/view/v055i05) (2013), and [Zhang and Yu](https://jamanetwork.com/journals/jama/fullarticle/188182) (1998). 
+
 
 ```r
-interpret_estimate <- function(model){
+odds_to_risk <- function(model){
     
-    # Control 
+    # Calculating p0 (baseline or control group)
     intercept <- model$estimate[model$term == "(Intercept)"]
-    control <- exp(intercept) / (1 + exp(intercept))
+    control <- exp(intercept) / (1 + exp(intercept)) 
     
-    # Likelihood 
+    # Calculating relative risk 
     model <- model %>% filter(term != "(Intercept)")
-    
-    model$likelihood <- (exp(model$estimate) / (1 - control + (control * exp(model$estimate))))
+    model$relative_risk <- (exp(model$estimate) / 
+                        (1 - control + (control * exp(model$estimate)))) 
     
     return(model)
 }
@@ -285,18 +291,56 @@ interpret_estimate <- function(model){
 
 
 ```r
-interpret_estimate(lr_model) %>%
+odds_to_risk(lr_model) %>%
+  relocate(relative_risk) %>%
+  arrange(desc(relative_risk))
+```
+
+```
+##    relative_risk                   term   estimate  std.error   statistic
+## 1      2.6152880    raceNative American  1.3942077 0.76611816   1.8198338
+## 2      2.4961195    age_catLess than 25  1.3083903 0.07592869  17.2318308
+## 3      1.6882587         two_year_recid  0.6858625 0.06401955  10.7133288
+## 4      1.4528374   raceAfrican-American  0.4772070 0.06934914   6.8812245
+## 5      1.2402135           priors_count  0.2689453 0.01110379  24.2210342
+## 6      1.1947947           genderFemale  0.2212667 0.07951020   2.7828714
+## 7      0.8077863              raceAsian -0.2544147 0.47821105  -0.5320135
+## 8      0.7692955                 crimeM -0.3112408 0.06654750  -4.6769729
+## 9      0.6948050           raceHispanic -0.4283949 0.12812549  -3.3435572
+## 10     0.4865228              raceOther -0.8263469 0.16208006  -5.0983873
+## 11     0.2971899 age_catGreater than 45 -1.3556332 0.09908053 -13.6821355
+##          p.value    conf.low  conf.high
+## 1   6.878432e-02 -0.05694017  3.0383160
+## 2   1.532239e-66  1.16008750  1.4577645
+## 3   8.813460e-27  0.56039880  0.8113799
+## 4   5.934025e-12  0.34137020  0.6132514
+## 5  1.335783e-129  0.24750487  0.2910343
+## 6   5.388016e-03  0.06532360  0.3770591
+## 7   5.947167e-01 -1.25877950  0.6389894
+## 8   2.911407e-06 -0.44178937 -0.1808904
+## 9   8.271164e-04 -0.68190124 -0.1794075
+## 10  3.425594e-07 -1.15026143 -0.5142075
+## 11  1.298233e-42 -1.55226716 -1.1637224
+```
+
+Relative risk score 1.45 (African American) indicates that black defendants are 45% more likely than white defendants to receive a higher score.
+
+The plot visualizes this and other results from the table. 
+
+
+```r
+odds_to_risk(lr_model) %>%
     mutate(term = gsub("race|age_cat|gender","", term)) %>% 
-    ggplot(aes(x = fct_reorder(term, likelihood), y = likelihood)) +
+    ggplot(aes(x = fct_reorder(term, relative_risk), y = relative_risk)) +
         geom_point(size = 3) +
         coord_flip() +
         labs(y = "Likelihood", x = "",
-            title ="Logistic regression") +
+             title = "Logistic regression") +
         scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
         geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
-<img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="01_risk_of_recidivism_analysis_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 
 

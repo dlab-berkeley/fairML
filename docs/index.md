@@ -2,7 +2,7 @@
 knitr: "bookdown::render_book"
 title: "Fairness and Bias in Machine Learning Workshop"
 author: ["Jae Yeon Kim", "Aniket Kesari", "Renata Barreto", "Avery Richard"]
-date: "2020-10-16"
+date: "2020-11-08"
 site: bookdown::bookdown_site
 github-repo: dlab-berkeley/fairMLworkshop
 output: bookdown::gitbook
