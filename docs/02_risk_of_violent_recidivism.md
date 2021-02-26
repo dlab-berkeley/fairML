@@ -23,24 +23,44 @@ pacman::p_load(
  here, # reproducibility 
  glue # pasting strings and objects 
 )
+```
 
+```
+## Installing package into 'C:/Users/Anike/OneDrive/Documents/R/win-library/4.0'
+## (as 'lib' is unspecified)
+```
+
+```
+## Warning: unable to access index for repository http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/4.0:
+##   cannot open URL 'http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/4.0/PACKAGES'
+```
+
+```
+## package 'conflicted' successfully unpacked and MD5 sums checked
+## 
+## The downloaded binary packages are in
+## 	C:\Users\Anike\AppData\Local\Temp\RtmpW61ylG\downloaded_packages
+```
+
+```
+## 
+## conflicted installed
+```
+
+```
+## Warning: package 'conflicted' was built under R version 4.0.3
+```
+
+```
+## Warning in pacman::p_load(tidyverse, conflicted, ggthemes, patchwork, scales, : Failed to install/load:
+## conflicted
+```
+
+```r
 # To avoid conflicts 
-conflict_prefer("filter", "dplyr") 
-```
+#conflicted::conflict_prefer("filter", "dplyr") 
+#conflicted::conflict_prefer("select", "dplyr") 
 
-```
-## [conflicted] Will prefer dplyr::filter over any other package
-```
-
-```r
-conflict_prefer("select", "dplyr") 
-```
-
-```
-## [conflicted] Will prefer dplyr::select over any other package
-```
-
-```r
 # Set themes 
 theme_set(ggthemes::theme_fivethirtyeight())
 ```
@@ -59,8 +79,7 @@ two_years_violent <- read_csv(here("data" ,"compas-scores-two-years-violent.csv"
 ```
 
 ```
-## 
-## ── Column specification ────────────────────────────────────────────────────────────────────────────
+## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
 ##   name = col_character(),
@@ -85,7 +104,10 @@ two_years_violent <- read_csv(here("data" ,"compas-scores-two-years-violent.csv"
 ##   r_jail_in = col_date(format = "")
 ##   # ... with 14 more columns
 ## )
-## ℹ Use `spec()` for the full column specifications.
+```
+
+```
+## See spec(...) for full column specifications.
 ```
 
 ```r
@@ -157,14 +179,14 @@ head(df, 5) # Check whether the function works as expected
 
 ```
 ## # A tibble: 5 x 12
-##     age crime race  age_cat score gender priors_count days_b_screenin…
+##     age crime race  age_cat score gender priors_count days_b_screenin~
 ##   <dbl> <fct> <fct> <fct>   <fct> <fct>         <dbl>            <dbl>
-## 1    69 F     Other Greate… Low   Male              0               -1
-## 2    34 F     Afri… 25 - 45 Low   Male              0               -1
+## 1    69 F     Other Greate~ Low   Male              0               -1
+## 2    34 F     Afri~ 25 - 45 Low   Male              0               -1
 ## 3    44 M     Other 25 - 45 Low   Male              0                0
 ## 4    43 F     Other 25 - 45 Low   Male              3               -1
-## 5    39 M     Cauc… 25 - 45 Low   Female            0               -1
-## # … with 4 more variables: v_decile_score <dbl>, is_recid <dbl>,
+## 5    39 M     Cauc~ 25 - 45 Low   Female            0               -1
+## # ... with 4 more variables: v_decile_score <dbl>, is_recid <dbl>,
 ## #   two_year_recid <dbl>, score_num <dbl>
 ```
 
